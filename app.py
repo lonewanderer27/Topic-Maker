@@ -64,6 +64,6 @@ async def thread(ctx: interactions.CommandContext, name: str, role, channel=None
 
     print('%s%s: created thread on channel: %s' %(ctx.user.username, "#"+ctx.member.user.discriminator, channel.name))
     
-
-keep_alive()
-bot.start()
+if __name__ == '__main__':
+    keep_alive()
+    bot.start()
