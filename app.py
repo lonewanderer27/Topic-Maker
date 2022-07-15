@@ -1,7 +1,10 @@
 import os
 from datetime import date
-from keep_alive import keep_alive
 import interactions
+from flask import Flask
+from threading import Thread
+
+app = Flask(__name__)
 
 
 # TESTING_SERVERS=[941233178729938955, 997532964659404910]
@@ -61,9 +64,25 @@ async def thread(ctx: interactions.CommandContext, name: str, role, channel=None
 
     thread = await channel.create_thread(name=name)
     await thread.send(embeds=thread_created_embed)
+    await thread.send(f"{role.mention}")
 
     print('%s%s: created thread on channel: %s' %(ctx.user.username, "#"+ctx.member.user.discriminator, channel.name))
-    
+
+
+
+
+@app.route("/")
+def index():
+    return "Hello! I'm a webserver serving for Topicmaker Discord bot."
+
+def run():
+    app.run()
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
 if __name__ == '__main__':
     keep_alive()
     bot.start()
+
